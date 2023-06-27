@@ -12,7 +12,7 @@ router.post('/post-cart', shopController.postCart);
 
 router.post('/post-delete-cart', shopController.postDeleteCart);
 
-
+// order
 router.get('/order', shopController.getOrder);
 
 router.post('/post-order', shopController.postOrder)

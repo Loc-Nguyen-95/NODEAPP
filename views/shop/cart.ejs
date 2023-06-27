@@ -15,18 +15,18 @@
         <% if(products.length > 0) { %>
             <ul>
                 <% products.forEach( p => { %>
-                    <li><p><%= p.title %> (<%= p.quantity %>)</p></li>
+                    <li><p><%= p.productId.title %> (<%= p.quantity %>)</p></li>
 
                     <form action="/post-delete-cart" method="POST">
                         <button class="btn" type="submit">Delete item</button>
-                        <input type="hidden" name="prodId" value="<%= p._id %>">
+                        <input type="hidden" name="prodId" value="<%= p.productId._id %>">
                     </form>
                     
                     <% }) %>
                 </ul>
 
                 <!-- chỉ cần action và method, k cần input -->
-                <form action="/post-order" method="POST"> 
+                <form action="/post-order" method="POST">
                     <button class="btn" type="submit">Order now</button>
                 </form>
 
