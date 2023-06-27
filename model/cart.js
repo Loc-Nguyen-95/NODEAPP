@@ -9,15 +9,15 @@ const p = path.join(
 )
 
 class Cart {
+
     static addProduct(id, productPrice) {
         fs.readFile(p, (err, content) => {
             
             let cart = { products: [], totalPrice: 0 }
 
-            // read data cart nếu có data  (khác err)
             if(!err){
                 cart = JSON.parse(content);
-            }
+            } 
 
             const Index = cart.products.findIndex(p => p.id === id);
             const existingProduct = cart.products[Index];

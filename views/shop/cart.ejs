@@ -9,19 +9,27 @@
     <link rel="stylesheet" href="/css/product.css" >
     <link rel="stylesheet" href="/css/form.css" >
 </head>
-<body>
+<body> 
     <%- include('../includes/navigation.ejs') %>
     <main>
         <% if(products.length > 0) { %>
             <ul>
                 <% products.forEach( p => { %>
-                    <li><p><%= p.productData.title %> (<%= p.qty %>)</p></li>
+                    <li><p><%= p.title %> (<%= p.quantity %>)</p></li>
+
                     <form action="/post-delete-cart" method="POST">
-                        <button class="btn" type="submit">Delete</button>
-                        <input type="hidden" name="prodId" value="<%= p.productData.id %>">
+                        <button class="btn" type="submit">Delete item</button>
+                        <input type="hidden" name="prodId" value="<%= p._id %>">
                     </form>
-                <% }) %>
-            </ul>
+                    
+                    <% }) %>
+                </ul>
+
+                <!-- chỉ cần action và method, k cần input -->
+                <form action="/post-order" method="POST"> 
+                    <button class="btn" type="submit">Order now</button>
+                </form>
+
         <% } else { %>
             <h1>No products in cart</h1>
         <% } %>
