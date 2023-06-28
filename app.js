@@ -3,6 +3,8 @@ const express = require('express');
 
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
+const errorController = require('./controllers/error');
+const authRoutes = require('./routes/auth');
 
 const bodyParser = require('body-parser');
 
@@ -25,8 +27,11 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.set('view engine', 'ejs'); //view engine: ejs 
 app.set('views', 'views');     //views : views folder
 
+// use midleware
+
+//Fake login ...
 app.use((req, res, next) => {
-    User.findById('644e3ba2bb7c9a62ae805995') // Fake login ...
+    User.findById('644e3ba2bb7c9a62ae805995') 
         .then(user => {
             // lưu thông tin user vào object req
             req.user = user; //không cần gọi new vì không phải là class model
@@ -35,9 +40,11 @@ app.use((req, res, next) => {
         .catch(err => console.log(err))
 })
 
-// use midleware
 app.use('/admin', adminRoutes);
-app.use(shopRoutes)
+app.use(shopRoutes);
+app.use(authRoutes);
+
+app.use(errorController.get404)
 
 // app.listen(5001);
 // mongoConnect(() => app.listen(5001));

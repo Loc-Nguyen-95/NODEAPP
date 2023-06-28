@@ -30,7 +30,7 @@ userSchema.methods.addToCart = function(product) {
         newQty = this.cart.items[Index].quantity + 1;
         updatedCartItems[Index].quantity = newQty;
     } else {
-        updatedCartItems.push({
+        updatedCartItems.push({ 
             productId: product._id,
             quantity: newQty
         })

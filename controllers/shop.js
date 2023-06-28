@@ -9,7 +9,8 @@ exports.getIndex = (req, res, next) => {
             res.render('shop/index', {
                 prods: products,
                 pageTitle: 'Shop',
-                path: '/'
+                path: '/',
+                isAuth: false
             })
         }
         )
@@ -35,7 +36,7 @@ exports.getCart = (req, res, next) => { // Get toàn bộ cart items
         .populate('cart.items.productId')
         .then(user => {
             const products = user.cart.items;
-            console.log('products pass to cart: ', products)
+            console.log('--> products pass to cart: ', products)
             res.render('shop/cart', {
                 pageTitle: 'Cart',
                 path: '/cart',
@@ -66,13 +67,16 @@ exports.postOrder = (req, res, next) => {
             const products = user.cart.items.map(item => {
                 return {product: { ...item.productId._doc}, quantity: item.quantity }
             });
+            console.log('--> products in order:', products);
+            console.log(req.user)
             const order = new Order({
                 user: {
                     email: req.user.email,
-                    userId: req.user // ??
+                    userId: req.user
                 },
                 products: products
             })
+            console.log('--> order:', order)
             return order.save();
         })
         // .addOrder()
@@ -88,7 +92,7 @@ exports.getOrder = (req, res, next) => {
     // req.user.getOrder() // thật ra đến đây đã có dữ liệu orders rồi
     Order.find({'user.userId' : req.user._id })
         .then(orders => {
-            console.log('orders: ', orders)
+            // console.log('orders: ', orders)
             res.render('shop/order', {
                 pageTitle: 'Order',
                 path: '/order',
