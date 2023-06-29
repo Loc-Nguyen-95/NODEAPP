@@ -2,7 +2,7 @@ const Product = require('../model/product');
 
 const Order = require('../model/order');
 
-//(*)
+//(*) 
 exports.getIndex = (req, res, next) => {
     Product.find()
         .then(products => {
@@ -10,7 +10,7 @@ exports.getIndex = (req, res, next) => {
                 prods: products,
                 pageTitle: 'Shop',
                 path: '/',
-                isAuth: false
+                isAuth: req.session.isLoggedIn
             })
         }
         )
@@ -40,7 +40,8 @@ exports.getCart = (req, res, next) => { // Get toàn bộ cart items
             res.render('shop/cart', {
                 pageTitle: 'Cart',
                 path: '/cart',
-                products: products
+                products: products,
+                isAuth: req.session.isLoggedIn
             })
         })
         .catch(err => console.log(err))
@@ -96,7 +97,8 @@ exports.getOrder = (req, res, next) => {
             res.render('shop/order', {
                 pageTitle: 'Order',
                 path: '/order',
-                orders: orders
+                orders: orders,
+                isAuth: req.session.isLoggedIn
             })
         })
         .catch(err => console.log(err))

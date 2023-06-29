@@ -10,9 +10,17 @@ const bodyParser = require('body-parser');
 
 // const mongoConnect = require('./util/database').mongoConnect;
 const mongoose = require('mongoose');
-
 const User = require('./model/user');
 
+//session
+const session = require('express-session');
+
+const MongodbStore = require('connect-mongodb-session')(session);
+const MONGO_URI = 'mongodb+srv://Loc_nguyen:mDEMfSQT_Dr5est@cluster0.xrlivxz.mongodb.net/shop';
+const store = new MongodbStore({
+    uri: MONGO_URI,
+    collection: 'sessions'
+})
 
 // call express
 const app = express();
@@ -27,14 +35,39 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.set('view engine', 'ejs'); //view engine: ejs 
 app.set('views', 'views');     //views : views folder
 
-// use midleware
+//Use midleware
 
-//Fake login ...
+//* Fake login ... 
+// app.use((req, res, next) => {
+//     User.findById('644e3ba2bb7c9a62ae805995') 
+//         .then(user => {
+//             // lưu thông tin user vào object req
+//             req.user = user; //không cần gọi new vì không phải là class model
+//             next()
+//         })
+//         .catch(err => console.log(err))
+// })
+
+//* app.use ... session()
+app.use(session({
+    secret: 'my secret',
+    resave: false,
+    saveUninitialized: false,
+    store: store
+}))
+
+//* Login with session
 app.use((req, res, next) => {
-    User.findById('644e3ba2bb7c9a62ae805995') 
+    if(!req.session.user){  // Schema session = req.session
+        console.log('Không có user trong sesson !')
+        // return res.end(); // Nên báo lỗi ??
+        return next();
+    }
+    // console.log(req.session.user)
+    User.findById(req.session.user._id)
         .then(user => {
-            // lưu thông tin user vào object req
-            req.user = user; //không cần gọi new vì không phải là class model
+            console.log('Tim thay user trong schema User')
+            req.user = user;
             next()
         })
         .catch(err => console.log(err))
@@ -49,13 +82,12 @@ app.use(errorController.get404)
 // app.listen(5001);
 // mongoConnect(() => app.listen(5001));
 mongoose
-    .connect('mongodb+srv://Loc_nguyen:mDEMfSQT_Dr5est@cluster0.xrlivxz.mongodb.net/shop?retryWrites=true&w=majority')
+    .connect(MONGO_URI)
     .then(result => {
         console.log('Connected to MongoDb !')
         User.findOne()
             .then(user => {
                 if (!user) {
-                    console.log('No user found ! Creating ...')
                     const user = new User({
                         name: "Test",
                         email: 'test@123.com',
@@ -63,7 +95,6 @@ mongoose
                     });
                     user.save()
                 }
-                console.log('Have atleast one user !')
             })
         app.listen(5001)
     })
