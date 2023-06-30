@@ -43,26 +43,31 @@ postLogin: (set cookie)
 
 ## II. Authentication 
 
-1 - Gọi csurf, connect-flash 
+1 - (app.js) Kiểm tra trong session có user và isLoggedIn chưa -> lưu user vào request
+    middleware: app.use ... 
+        if !req.session.user 
+            -> next() ??
+        else 
+        User.findById(req.session.user._id)
+            if user req.user = user 
+            -> next() 
 
-......
+2 - set isLoggegIn locals (cho mọi render view)
+        req.locals.isAuth = req.session.isLoggedIn
 
-2 - set isAuth và csrfToken vào locals (cho mọi render view)
-    app.use .... 
-    res.locals.isAuth = req.session.isLoggedIn;
-    res.locals.csrfToken = req.csrfToken();
+3 - Kiểm tra email, password người dùng -> ghi vào session 
 
-3 - Kiểm tra thông tin login từ người dùng 
-post login
     const email = req.body.email;
     const password = req.body.password;
-    a - Tìm email 
+
+    a - Tìm user thông qua email 
     Use.findOne({email: email})
     .then(user => {
         if !user -> 
         req.flash('error', '....')
         redirect /login
         }
+
         b - So sánh password
         bcrypt 
             .compare(password, user.password)
