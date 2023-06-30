@@ -135,6 +135,23 @@ form {
     border-radius: 3px;
 }
 
+/* user message */
+.user-message {
+    margin: auto;
+    width: 90%;
+    border: 1px solid #4771fa;
+    padding: 0.5rem;
+    border-radius: 3px;
+    background: #b9c9ff;
+    text-align: center;
+}
+
+.user-message__error {
+    border-color: red;
+    background: rgb(255, 176, 176);
+    color: red;
+}
+
  @media (min-width: 768px) {
      .main-header__nav {
          display: flex;
@@ -142,6 +159,10 @@ form {
 
      #toggle {
          display: none;
+     }
+
+     .user-message {
+         width: 30rem;
      }
  }
 
@@ -205,4 +226,6 @@ form {
     justify-content: space-around;
     align-items: stretch;
 }
+
+
 

@@ -11,6 +11,10 @@ const userSchema = new Schema({
         type: String,
         require: true
     },
+    password: {
+        type: String,
+        require: true
+    },
     cart: {
         items: [{
             productId: {
@@ -22,6 +26,7 @@ const userSchema = new Schema({
         }]
     }
 })
+
 userSchema.methods.addToCart = function(product) {
     const Index = this.cart.items.findIndex(p => p.productId.toString() === product._id.toString());
     let newQty = 1;

@@ -6,6 +6,7 @@ const shopRoutes = require('./routes/shop');
 const errorController = require('./controllers/error');
 const authRoutes = require('./routes/auth');
 
+
 const bodyParser = require('body-parser');
 
 // const mongoConnect = require('./util/database').mongoConnect;
@@ -22,6 +23,11 @@ const store = new MongodbStore({
     collection: 'sessions'
 })
 
+//csurf + connect-flash
+const csrf = require('csurf');
+const csrfProtection = csrf()
+const flash = require('connect-flash');
+
 // call express
 const app = express();
 
@@ -37,17 +43,6 @@ app.set('views', 'views');     //views : views folder
 
 //Use midleware
 
-//* Fake login ... 
-// app.use((req, res, next) => {
-//     User.findById('644e3ba2bb7c9a62ae805995') 
-//         .then(user => {
-//             // lưu thông tin user vào object req
-//             req.user = user; //không cần gọi new vì không phải là class model
-//             next()
-//         })
-//         .catch(err => console.log(err))
-// })
-
 //* app.use ... session()
 app.use(session({
     secret: 'my secret',
@@ -56,21 +51,32 @@ app.use(session({
     store: store
 }))
 
-//* Login with session
+//
+app.use(csrfProtection);
+app.use(flash());
+
+//* Login with session 
 app.use((req, res, next) => {
+    // Kiểm tra session
     if(!req.session.user){  // Schema session = req.session
         console.log('Không có user trong sesson !')
         // return res.end(); // Nên báo lỗi ??
         return next();
-    }
-    // console.log(req.session.user)
+    } 
     User.findById(req.session.user._id)
         .then(user => {
-            console.log('Tim thay user trong schema User')
+            // console.log('Tim thay user trong schema User')
             req.user = user;
             next()
         })
         .catch(err => console.log(err))
+})
+
+//csurf attack
+app.use((req, res, next) => {
+    res.locals.isAuth = req.session.isLoggedIn;
+    res.locals.csrfToken = req.csrfToken();
+    next();
 })
 
 app.use('/admin', adminRoutes);
@@ -84,18 +90,18 @@ app.use(errorController.get404)
 mongoose
     .connect(MONGO_URI)
     .then(result => {
-        console.log('Connected to MongoDb !')
-        User.findOne()
-            .then(user => {
-                if (!user) {
-                    const user = new User({
-                        name: "Test",
-                        email: 'test@123.com',
-                        cart: { items: [] }
-                    });
-                    user.save()
-                }
-            })
+        // console.log('Connected to MongoDb !')
+        // User.findOne()
+        //     .then(user => {
+        //         if (!user) {
+        //             const user = new User({
+        //                 name: "Test",
+        //                 email: 'test@123.com',
+        //                 cart: { items: [] }
+        //             });
+        //             user.save()
+        //         }
+        //     })
         app.listen(5001)
     })
     .catch(err => console.log(err))

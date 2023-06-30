@@ -1,35 +1,101 @@
 const User = require('../model/user');
+const bcrypt = require('bcryptjs');
 
 exports.getLogin = (req, res, next) => {
-    // const isLoggedIn = req.get('Cookie')
-    // .trim()
-    // .split('=')[1]
+    let message = req.flash('error');
+    if (message.length > 0) {
+        message = message[0];
+    } else {
+        message = null
+    }
     res.render('auth/login', {
         pageTitle: 'Login',
         path: '/login',
-        isAuth: false
-    }) 
+        message: message
+    })
 }
 
 exports.postLogin = (req, res, next) => {
-    // res.setHeader('Set-Cookie', 'loggedIn=true');
-    // res.redirect('/')
-    User.findById('644e3ba2bb7c9a62ae805995') // luôn có 
+    const email = req.body.email;
+    const password = req.body.password;
+    User.findOne({email: email})
     .then(user => {
-        // console.log('req.session: ', req.session)
-        req.session.isLoggedIn = true;
-        req.session.user = user;
-
-        req.session.save(err => {
-            console.log(err);
-            res.redirect('/')
+        if(!user){
+            console.log('post login: k tìm thấy user')
+            req.flash('error', 'Invalid email or password.')
+            return res.redirect('/login')
+        }
+        // console.log('so sánh password ');
+        // console.log(user)
+        bcrypt
+        .compare(password, user.password)
+        .then(doMatch => {
+            if(doMatch){
+                console.log('doMatch: ', doMatch)
+                // Lưu vào session 
+                req.session.isLoggedIn = true;
+                req.session.user = user;
+                return req.session.save(err => {
+                    console.log(err);
+                    console.log('save session')
+                    res.redirect('/')
+                })
+            }
+            req.flash('error', 'Invalid email or password.');
+            res.redirect('/login')
         })
+        .catch(err => {
+            console.log(err);
+            res.redirect('/login')
+        })
+    })
+    .catch(err => console.log(err))
+}
+ 
+exports.postLogout = (req, res, next) => {
+    req.session.destroy(err => {
+        console.log(err);
+        res.redirect('/');
     })
 }
 
-exports.postLogout = (req, res , next) => {
-    req.session.destroy(err => {
-        console.log.og(err);
-        res.redirect('/');
+//singup
+exports.getSignup = (req, res, next) => {
+    let message = req.flash('error');
+    if(message.length > 0){
+        message = message[0]
+    } else {
+        message = null
+    }
+    res.render('auth/signup', {
+        path: '/signup',
+        pageTitle: 'Sign up',
+        message: message
     })
+}
+
+exports.postSignup = (req, res, next) => {
+    const email = req.body.email;
+    const password = req.body.password;
+    User.findOne({email: email})
+    .then(user => {
+        if(user){
+            req.flash('error', 'Email exists already')
+            return res.redirect('/signup');
+        }
+        bcrypt 
+        .hash(password, 12)
+        .then(hashedPassword => {
+            const user = new User({
+                email: email,
+                password: hashedPassword,
+                cart: {items: []}
+            });
+            return user.save()
+        })
+        .then(result => {
+            res.redirect('/login')
+        })
+    })
+    .catch(err => console.log(err))
 }
