@@ -45,7 +45,7 @@ req.get('Cookie')
 
 -> session được lưu trong object request : req.session
 
-===
+=====
 Session không tạo model giống như các schema khác 
 Được tạo thông qua middleeware app.use(session(...store: store))
     store = MongodbStore({
