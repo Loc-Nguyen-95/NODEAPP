@@ -27,6 +27,7 @@
 
                 <!-- chỉ cần action và method, k cần input -->
                 <form action="/post-order" method="POST">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <button class="btn" type="submit">Order now</button>
                 </form>
 

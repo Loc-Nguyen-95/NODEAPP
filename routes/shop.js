@@ -19,6 +19,9 @@ router.post('/post-delete-cart', authMiddleware, shopController.postDeleteCart);
 // order
 router.get('/order', authMiddleware, shopController.getOrder);
 
-router.post('/post-order', authMiddleware, shopController.postOrder)
+router.post('/post-order', authMiddleware, shopController.postOrder);
 
-module.exports = router;
+//Invoice
+router.get('/order/:orderId', shopController.getInvoice)
+
+module.exports = router; 

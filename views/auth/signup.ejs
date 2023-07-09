@@ -1,37 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= pageTitle %></title>
+    <title>
+        <%= pageTitle %>
+    </title>
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/form.css">
     <link rel="stylesheet" href="/css/auth.css">
 </head>
-<body> 
+
+<body>
     <%- include('../includes/navigation.ejs') %>
-    <main>
-        <% if (message) { %>
-            <div class="user-message user-message__error"><%= message %></div>
-        <% } %>
-        <form class="login-form" action="/signup" method="POST">
-            <div class="form-control">
-                <label for="email">Email</label>
-                <input type="email" name="email" id="email">
-            </div>
-            <div class="form-control">
-                <label for="password">Password</label>
-                <input type="password" name="password" id="password">
-            </div>
-            <div class="form-control">
-                <label for="confirmPassword">Confirm Password</label>
-                <input type="password" name="confirmPassword" id="confirmPassword">
-            </div>
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-            <button class="btn" type="submit">Signup</button>
-        </form>
-    </main>
-    <script src="/js/main.js"></script>
+        <main>
+            <% if (message) { %>
+                <div class="user-message user-message__error">
+                    <%= message %>
+                </div>
+                <% } %>
+                    <form class="login-form" action="/signup" method="POST" novalidate>
+                        <div class="form-control">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" id="email"
+                                class="<%= validationErrors.find(e => e.param === 'email') ? 'invalid' : '' %>"
+                                value="<%= oldInput.email %>">
+                        </div>
+                        <div class="form-control">
+                            <label for="password">Password</label>
+                            <input type="password" name="password" id="password"
+                            value="<%= oldInput.password %>">
+                        </div>
+                        <div class="form-control">
+                            <label for="confirmPassword">Confirm Password</label>
+                            <input type="password" name="confirmPassword" id="confirmPassword"
+                            value="<%= oldInput.conformPassword %>">
+                        </div>
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <button class="btn" type="submit">Signup</button>
+                    </form>
+        </main>
+        <script src="/js/main.js"></script>
 </body>
+
 </html>

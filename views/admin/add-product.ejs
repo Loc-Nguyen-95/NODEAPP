@@ -10,19 +10,23 @@
     <link rel="stylesheet" href="/css/main.css" />
     <link rel="stylesheet" href="/css/form.css" />
     <link rel="stylesheet" href="/css/product.css" />
-</head>
+</head> 
 
 <body>
     <%- include('../includes/navigation.ejs') %>
     <main>
-            <form class="product-form" action="/admin/<% if(editing) { %>edit-product<% } else { %>post-add-product<% }  %>" method="POST">
+            <form class="product-form" action="/admin/<% if(editing) { %>edit-product<% } else { %>post-add-product<% }  %>" method="POST"
+                enctype="multipart/form-data">
                 <div class="form-control">
-                    <label for="title">Title</label>
+                    <label for="title">Title</label> 
                     <input type="text" name="title" value="<% if(editing) { %><%= product.title %><% } %>">
                 </div>
                 <div class="form-control">
-                    <label for="mageUrl">Image url</label>
-                    <input type="text" name="imageUrl" value="<% if(editing) { %><%= product.imageUrl %><% } %>">
+                    <label for="image">Image</label>
+                    <input 
+                    type="file" 
+                    name="image" 
+                    id="image">
                 </div>
                 <div class="form-control"> 
                     <label for="price">Price</label>
@@ -35,6 +39,7 @@
                 <% if (editing) { %>
                     <input type="hidden" name="prodId" value="<%= product._id %>">
                 <% } %>
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                 <button class="btn" type="submit"><% if(editing) { %> Edit <% } else { %> Add <% }  %></button>
             </form> 
     </main>

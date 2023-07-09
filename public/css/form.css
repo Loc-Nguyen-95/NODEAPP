@@ -15,6 +15,18 @@
     border: 1px solid #a1a1a1;
     font: inherit;
     border-radius: 2px;
-
 }
+
+/* focus */
+.form-control input:focus,
+.form-control textarea:focus {
+    outline-color: #00695c;
+}
+
+/* invalid */
+.form-control input.invalid,
+.form-control textarea.invalid {
+    border-color: red;
+}
+
 
