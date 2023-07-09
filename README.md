@@ -24,7 +24,7 @@ postLogin: (set cookie)
     Secure (https only)
     HttpOnly 
 
-=== 
+---
 res.setHeader('Set-Cookie', '...')
 req.get('Cookie')
 
@@ -45,7 +45,7 @@ req.get('Cookie')
 
 -> session được lưu trong object request : req.session
 
-=========
+---
 Session không tạo model giống như các schema khác 
 Được tạo thông qua middleeware app.use(session(...store: store))
     store = MongodbStore({
@@ -127,7 +127,7 @@ export: (req, res, next) => {
     }
 }
 
-===
+---
 Kiểm tra thông tin Email loggin xem có đúng với thông tin lưu trong DB không
 
 post login
@@ -168,7 +168,7 @@ const transporter = nodemailer.createTransport(
     html: '<h1>Sign up successful</h1>'
 })
 
-===
+---
 Xử lí email (mail server) và xử lí request (node server)
 chủ yếu là gửi lại mail cho user từ nodejs 
 
@@ -295,7 +295,7 @@ Note: Xoá file khi update immage (Chọn file mới)
             })
         }
 
-===
+-----
 multer: Có thể đọc được nhiều dạng input type 
 
 2. Download invoice
