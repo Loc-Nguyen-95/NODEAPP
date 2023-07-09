@@ -165,7 +165,7 @@ const transporter = nodemailer.createTransport(
     to: email, (email login, email của user)
     from: "shop@node-complete.com", (Nodejs server)
     subject: 'Signup successful',
-    html: '<h1>Sign up successful</h1>'
+    html: `'<h1>Sign up successful</h1>'`
 })
 
 ---
