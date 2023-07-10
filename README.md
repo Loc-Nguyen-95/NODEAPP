@@ -28,11 +28,12 @@ OPTION
 
 Sử dụng bodyParser.json()
 
-RES.setHeader(
-    1/ 'Access-Control-Allow-Origin' , '*'
-    2/ 'Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE'
-    3/ 'Access-Control-Allow-Headers', 'Content-Type, Authorization'
-)
+    RES.setHeader(
+        1/ 'Access-Control-Allow-Origin' , '*'
+        2/ 'Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE'
+        3/ 'Access-Control-Allow-Headers', 'Content-Type, Authorization'
+    )
 
-Get: res.status(200).json({...})
-Post: res.status(201).json({...})
+__Get:__ res.status(200).json({...})
+
+__Post:__ res.status(201).json({...})
