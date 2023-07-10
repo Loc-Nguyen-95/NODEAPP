@@ -40,7 +40,7 @@ __Post:__ res.status(201).json({...})
 
 ---
 
-* Useful links and resources
+## Useful links and resources
 
 Introduction to fetch():
 
