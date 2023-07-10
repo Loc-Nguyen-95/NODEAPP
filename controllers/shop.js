@@ -131,14 +131,15 @@ exports.getInvoice = (req, res, next) => {
 
             const invoicePath = path.join('data', 'invoices', invoiceName);
 
-            const pdfDoc = new PDFDocument(); 
+            const pdfDoc = new PDFDocument();
 
             res.setHeader('Content-Type', 'application/pdf');
             res.setHeader(
                 'Content-Disposition',
                 'inline; filename="' + invoiceName + '"'
             ); // ?? 
-            pdfDoc.pipe(fs.createWriteStream(invoicePath));
+
+            pdfDoc.pipe( fs.createWriteStream(invoicePath) );
             pdfDoc.pipe(res);
             // make up
             pdfDoc

@@ -78,7 +78,7 @@ exports.postEdit = (req, res, next) => {
     const updatedPrice = req.body.price;
     const updatedDesc = req.body.desc;
 
-    console.log('test', image)
+    console.log('test', image) 
     // const newProduct = new Product(updatedTitle, updatedImageUrl, updatedPrice, updatedDesc, id); // Có id 
     // newProduct.save()
     Product.findById(id)
@@ -100,12 +100,27 @@ exports.postEdit = (req, res, next) => {
 }
 
 //(3)
-exports.postDelete = (req, res, next) => {
-    const id = req.body.productId;
-    Product.findByIdAndRemove(id)
+exports.postDelete = (req, res, next) => { 
+    // console.log('--> delete product');
+    const id = req.params.productId;
+    Product.findById(id)
+    // .then(() => {
+    //     res.redirect('/admin/products');
+    // })
+    // .catch(err => next(new Error(err)))
+    .then(product => {
+
+        if(!product){
+            return next(new Error('Product not found.'));
+        }
+        fileHelper.deleteFile(product.imageUrl);
+        return Product.deleteOne({_id: id, userId: req.user._id});
+    }) 
     .then(() => {
-        res.redirect('/admin/products');
+        console.log('Destroyed product !');
+        res.status(200).json({message: 'Success !'});
     })
-    .catch(err => next(new Error(err)))
-    // res.redirect('/admin/products')
+    .catch(err => {
+        res.status(500).json({message: 'Deleting product failed.'})
+    })
 }

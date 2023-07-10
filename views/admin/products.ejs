@@ -27,20 +27,20 @@
                     </div>
                     <div class="card__actions">
                         <a class="btn" href="/admin/edit-product/<%= product._id %>">Edit</a>
-                        <form action="/admin/delete-product" method="POST">
+                        <!-- <form action="/admin/delete-product" method="POST"> -->
                             <input type="hidden" name="productId" value="<%= product._id %>">
                             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                            <button class="btn" type="submit">Delete</button>
-                        </form>
+                            <button class="btn" type="button" onclick="deleteProduct(this)">Delete</button>
+                        <!-- </form> -->
                     </div>
-                </article>
+                </article> 
             <% } %>
             </div>
         <% } else { %>
             <h1>Not found products </h1>
         <% } %>
     </main>
-    <script src="/js/main.js"></script>
-
+    <script src="/js/main.js"></script> 
+    <script src="/js/admin.js"></script>
 </body>
 </html>
