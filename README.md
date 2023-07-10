@@ -3,7 +3,9 @@
 ## What is NoSql 
 
 Làm việc với Database -> Collection -> Ducument (JSON)
+
     - NO data schema 
+    
     - NO data relations (few connection, can realate document) 
 
 ### Relation in NoSql
@@ -64,13 +66,21 @@ database.js
 
     6/ deleteOne({_id: ... })
 
-## Package Mongoose
+## Library Mongoose
 
 ODM Library (Object Document Mapping)
 
 - Khác với ORM trong Sql (Object Relation Mapping)
 
-### Model (schema) 
+## Mongoose connect 
+
+    mongoose.connect('....')
+        .then(result => {
+            app.listen(...)
+        )
+        .catch(err => console.log(err))
+
+## Model in Mongoose (schema) 
 
 call mongoose
 
@@ -90,6 +100,6 @@ VD:
 
     - SQL vs NoSQL: https://academind.com/learn/web-dev/sql-vs-nosql/
 
-    Package Mongoose 
+    Mongoose 
 
     - Mongoosejs: https://mongoosejs.com/docs/
