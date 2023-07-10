@@ -11,11 +11,11 @@ Người dùng không cần được cung cấp toàn bộ HTML code mà chỉ c
 Send request với HTTP method thông qua async request (fetch)
 
 `HTTP methods:`
-GET 
-POST 
-PUT 
-PATCH 
-DELETE
+GET,
+POST,
+PUT,
+PATCH,
+DELETE,
 OPTION
 
 `API endpoint:` HTTP methods + link
