@@ -1,7 +1,8 @@
 # REST API (mô hình request - response với data JSON)
 
-REST: Representation State - Transfer 
-API: Application Programing - Interface
+`REST:` Representation State - Transfer 
+
+`API:` Application Programing - Interface
 
 Bởi vì không phải tất cả các app đều sử dụng html code ví dụ Twitter (Mobile app): UI được cung cấp bởi apple
 
@@ -9,7 +10,7 @@ Người dùng không cần được cung cấp toàn bộ HTML code mà chỉ c
 
 Send request với HTTP method thông qua async request (fetch)
 
-HTTP methods: 
+`HTTP methods:`
 GET 
 POST 
 PUT 
@@ -17,9 +18,9 @@ PATCH
 DELETE
 OPTION
 
-API endpoint: HTTP methods + link
+`API endpoint:` HTTP methods + link
 
-REST princibles
+`REST princibles`
 1. Thống nhất request và resonse
 2. Stateless interaction (tương tác phi trạng thái): Không chia sẻ lịch sử chung, không sử dụng session, mỗi request là riêng lẽ và không liên quan đến request trước đó
 
