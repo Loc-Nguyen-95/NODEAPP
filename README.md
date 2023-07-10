@@ -1,4 +1,4 @@
-# NODEAPP - Part4 : REST API (mô hình request - response với data JSON)
+# NODEAPP - Part4 : :rocket: REST API (mô hình request - response với data JSON)
 
 `REST:` Representation State - Transfer 
 
@@ -37,3 +37,9 @@ Sử dụng bodyParser.json()
 __Get:__ res.status(200).json({...})
 
 __Post:__ res.status(201).json({...})
+
+* Useful links and resources
+
+Introduction to fetch():
+
+https://web.dev/introduction-to-fetch/
