@@ -38,6 +38,7 @@ __Get:__ res.status(200).json({...})
 
 __Post:__ res.status(201).json({...})
 
+---
 
 * Useful links and resources
 
