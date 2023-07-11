@@ -39,8 +39,12 @@ __Get:__ res.status(200).json({...})
 __Post:__ res.status(201).json({...})
 
 
-## Useful links and resources
+* Useful links and resources
 
-Introduction to fetch():
+    - Introduction to fetch():
 
-https://web.dev/introduction-to-fetch/
+      https://web.dev/introduction-to-fetch/
+
+    - Ajax request:
+
+      https://developer.mozilla.org/en-US/docs/Web/Guide/AJAX/Getting_Started
