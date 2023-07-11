@@ -37,23 +37,24 @@ FE: script tag
         })
     }
 
-BE: deleteProduct = (req, res, next) => {
-    const prodId = req.params.productId;
-    Product.findById(prodId)
-    .then( product => {
-        if !product
-            return next()
-        fileHelper.deleleFile(product.imageUrl);
-        return Product.deleteOne({_id: prodId, userId: req.user._id})
-        .then(() => {
-            console.log('Destroyed product');
-            res.status(200).json({message: 'Success !'})
+BE: 
+    deleteProduct = (req, res, next) => {
+        const prodId = req.params.productId;
+        Product.findById(prodId)
+        .then( product => {
+            if !product
+                return next()
+            fileHelper.deleleFile(product.imageUrl);
+            return Product.deleteOne({_id: prodId, userId: req.user._id})
+            .then(() => {
+                console.log('Destroyed product');
+                res.status(200).json({message: 'Success !'})
+            })
+            .catch(err => {
+                res.status(500).json({message: 'Deleting product failed'})
+            })
         })
-        .catch(err => {
-            res.status(500).json({message: 'Deleting product failed'})
-        })
-    })
-}
+    }
 
 
 
