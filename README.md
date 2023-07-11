@@ -13,6 +13,7 @@ server:
 
 
 FE: script tag
+
     function deleteProduct (btn) {
         const prodId = btn.parentNode.querySelector('[name=productId]').value;
         const csrf = btn.parentNode.querySelector('[name=_csrf]').value;
@@ -38,6 +39,7 @@ FE: script tag
     }
 
 BE: 
+
     deleteProduct = (req, res, next) => {
         const prodId = req.params.productId;
         Product.findById(prodId)
