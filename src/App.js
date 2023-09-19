@@ -44,7 +44,7 @@ function App() {
           placeholder="Type your email"
           {...register("email", {required: true})}
            />
-          {errors.email && <p>This is required !</p>}
+          {errors.email && <p>This is required!!!</p>}
 
         </div>
 
